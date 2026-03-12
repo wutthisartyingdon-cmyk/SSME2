@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SSME — Secret Superpower of Mindful Eating</title>
+  <meta name="description" content="SSME helps you build steadier energy and calmer food decisions through mindful, body-aware meal guidance." />
+  <style>
+    :root {
+      --bg: #f5fffc;
+      --bg-soft: #ecfbf6;
+      --mint: #b7f0dc;
+      --mint-2: #d8fff1;
+      --teal: #45b9a8;
+      --teal-dark: #247c73;
+      --text: #18312d;
+      --muted: #5d7974;
+      --card: rgba(255, 255, 255, 0.88);
+      --border: rgba(36, 124, 115, 0.12);
+      --shadow: 0 12px 32px rgba(33, 116, 104, 0.10);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --max: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, #dffff6 0, transparent 30%),
+        radial-gradient(circle at left top, #e8fff7 0, transparent 28%),
+        linear-gradient(180deg, #f9fffd 0%, #effbf7 45%, #f7fffc 100%);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(12px);
+      background: rgba(245, 255, 252, 0.75);
+      border-bottom: 1px solid rgba(36, 124, 115, 0.08);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--mint) 0%, var(--teal) 100%);
+      box-shadow: 0 10px 20px rgba(69, 185, 168, 0.25);
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 20px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a:hover { color: var(--teal-dark); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: none;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 24px rgba(36, 124, 115, 0.16);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.8);
+      color: var(--teal-dark);
+      border: 1px solid rgba(36, 124, 115, 0.12);
+    }
+
+    .hero {
+      padding: 52px 0 24px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(183, 240, 220, 0.45);
+      color: var(--teal-dark);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 4.5rem);
+      line-height: 1.03;
+      margin: 0 0 16px;
+      letter-spacing: -0.04em;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 18px;
+      margin: 0 0 24px;
+      max-width: 640px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+      min-width: 145px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 2px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .phone-shell {
+      position: relative;
+      max-width: 390px;
+      margin: 0 auto;
+      padding: 14px;
+      border-radius: 40px;
+      background: linear-gradient(180deg, #1f312e, #0d1d1a);
+      box-shadow: 0 24px 60px rgba(24, 49, 45, 0.26);
+    }
+
+    .phone-screen {
+      overflow: hidden;
+      border-radius: 30px;
+      background: linear-gradient(180deg, #f1fff9 0%, #f7fffc 100%);
+      min-height: 700px;
+      position: relative;
+    }
+
+    .phone-notch {
+      width: 120px;
+      height: 26px;
+      border-radius: 0 0 16px 16px;
+      background: #10211e;
+      margin: 0 auto;
+    }
+
+    .screen-inner {
+      padding: 18px;
+    }
+
+    .screen-top {
+      background: linear-gradient(180deg, #baf1df 0%, #d9fff0 100%);
+      border-radius: 22px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .mini-badge {
+      display: inline-block;
+      font-size: 12px;
+      color: var(--teal-dark);
+      background: rgba(255,255,255,0.75);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+
+    .screen-title {
+      margin: 12px 0 8px;
+      font-weight: 800;
+      font-size: 24px;
+    }
+
+    .screen-sub {
+      color: #336a62;
+      font-size: 14px;
+    }
+
+    .mini-card {
+      background: white;
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: 0 10px 22px rgba(36, 124, 115, 0.10);
+      margin-bottom: 12px;
+      border: 1px solid rgba(36, 124, 115, 0.08);
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .mini-pill {
+      background: var(--bg-soft);
+      color: var(--teal-dark);
+      border-radius: 14px;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .feature-section,
+    .journey-section,
+    .pricing-section,
+    .faq-section,
+    .cta-section,
+    footer {
+      padding: 42px 0;
+    }
+
+    .section-head {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 28px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      margin: 0 0 12px;
+      letter-spacing: -0.03em;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #dbfff2, #baf1df);
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.15rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .journey {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .step {
+      position: relative;
+      padding: 22px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(239,251,247,0.96));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+      color: white;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .step h3 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .pricing-box {
+      max-width: 920px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .price-card {
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .price-card.featured {
+      background: linear-gradient(180deg, #e9fff7 0%, #ffffff 100%);
+      outline: 2px solid rgba(69, 185, 168, 0.18);
+    }
+
+    .price-tag {
+      font-size: 2.1rem;
+      font-weight: 800;
+      margin: 8px 0 4px;
+    }
+
+    .price-sub {
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+      margin: 18px 0 24px;
+    }
+
+    .list-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: var(--text);
+    }
+
+    .check {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #d7fff1;
+      color: var(--teal-dark);
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      font-weight: 800;
+      flex: 0 0 auto;
+      margin-top: 1px;
+    }
+
+    .faq {
+      max-width: 860px;
+      margin: 0 auto;
+      display: grid;
+      gap: 14px;
+    }
+
+    details {
+      background: rgba(255,255,255,0.9);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px 18px;
+      box-shadow: var(--shadow);
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    details p {
+      color: var(--muted);
+      margin: 12px 0 0;
+    }
+
+    .cta-box {
+      max-width: 980px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #dffff6 0%, #f9fffd 100%);
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      padding: 34px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .cta-box h2 {
+      margin: 0 0 12px;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+    }
+
+    .cta-box p {
+      margin: 0 auto 22px;
+      max-width: 680px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    footer {
+      padding-top: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-grid {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(36, 124, 115, 0.08);
+      padding-top: 22px;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .pricing-box,
+      .journey,
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-grid { gap: 26px; }
+      .phone-shell { max-width: 420px; }
+      .journey { gap: 14px; }
+    }
+
+    @media (max-width: 640px) {
+      .nav-inner { align-items: flex-start; }
+      .nav-links { gap: 12px; font-size: 13px; }
+      .hero { padding-top: 28px; }
+      .hero p { font-size: 16px; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .btn { width: 100%; }
+      .screen-inner { padding: 14px; }
+      .phone-screen { min-height: auto; }
+      .cta-box, .price-card, .card, .step { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#top" class="brand">
+        <div class="logo">✦</div>
+        <div>
+          <div>SSME</div>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#journey">How it works</a>
+        <a href="#pricing">Plans</a>
+        <a href="#faq">FAQ</a>
+        <a href="#start" class="btn btn-primary" style="padding: 10px 16px;">Try SSME</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">🌿 Mindful eating, calmer energy, better food choices</div>
+        <h1>Secret Superpower of Mindful Eating.</h1>
+        <p>
+          SSME helps people notice body signals, plan meals with intention, and stay steady through the day — without harsh rules, guilt, or calorie obsession.
+        </p>
+        <div class="hero-actions">
+          <a href="#start" class="btn btn-primary">Start planning a meal</a>
+          <a href="#features" class="btn btn-secondary">See how it works</a>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <strong>Signals, not scores</strong>
+            <span>Gentle reflection over judgment</span>
+          </div>
+          <div class="stat">
+            <strong>Meal guidance</strong>
+            <span>Support for energy consistency</span>
+          </div>
+          <div class="stat">
+            <strong>Simple daily flow</strong>
+            <span>Check in → plan → eat → reflect</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="phone-shell" aria-label="SSME app preview">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="screen-inner">
+              <div class="screen-top">
+                <span class="mini-badge">SSME • Today</span>
+                <div class="screen-title">Plan a meal</div>
+                <div class="screen-sub">Choose what supports your energy right now.</div>
+              </div>
+
+              <div class="mini-grid">
+                <div class="mini-pill">⚡ Energized</div>
+                <div class="mini-pill">🌙 Sleep Better</div>
+                <div class="mini-pill">🧘 Calm & Focus</div>
+                <div class="mini-pill">🍽️ Balanced Plate</div>
+              </div>
+
+              <div class="mini-card">
+                <strong>Body signal check-in</strong>
+                <p style="margin: 8px 0 0; color: var(--muted); font-size: 14px;">
+                  “A little hungry, steady mood, mild afternoon dip.”
+                </p>
+              </div>
+
+              <div class="mini-card">
+                <strong>Suggested plate</strong>
+                <p style="margin: 8px 0 0; color: var(--muted); font-size: 14px;">
+                  Add more protein + fiber, keep the portion light, and choose a slower-energy carb.
+                </p>
+              </div>
+
+              <div class="mini-card">
+                <strong>Photo guidance</strong>
+                <p style="margin: 8px 0 0; color: var(--muted); font-size: 14px;">
+                  Snap your meal to get a simple visual balance suggestion.
+                </p>
+              </div>
+
+              <a href="#start" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Start planning a meal</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="feature-section" id="features">
+    <div class="container">
+      <div class="section-head">
+        <h2>A calmer way to eat with intention</h2>
+        <p>
+          Built for people who want steadier energy, better meal decisions, and a more mindful relationship with food.
+        </p>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">🫶</div>
+          <h3>Check in with your body</h3>
+          <p>Capture hunger, energy, mood, and context in a simple way that feels reflective instead of clinical.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📸</div>
+          <h3>Plan meals from real food</h3>
+          <p>Upload a meal photo or choose an intention to get practical guidance before you eat.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📈</div>
+          <h3>Notice your personal patterns</h3>
+          <p>See how food choices connect with your daily rhythm so you can adjust gently over time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="journey-section" id="journey">
+    <div class="container">
+      <div class="section-head">
+        <h2>How SSME works</h2>
+        <p>A lightweight daily journey that helps users move from autopilot eating to intentional eating.</p>
+      </div>
+
+      <div class="journey">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Check in</h3>
+          <p>Notice your current energy, hunger, mood, and what your body may be asking for.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Choose an intention</h3>
+          <p>Pick a goal like Energized, Calm & Focus, Sleep Better, or simply Balanced Plate.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Plan your meal</h3>
+          <p>Use meal photo analysis or simple guidance to make a small, realistic adjustment.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <h3>Reflect gently</h3>
+          <p>Notice what happened after eating and build a more personal understanding over time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing-section" id="pricing">
+    <div class="container">
+      <div class="section-head">
+        <h2>Simple plans for launch</h2>
+        <p>Example pricing section for the landing page. You can edit these details anytime.</p>
+      </div>
+
+      <div class="pricing-box">
+        <div class="price-card">
+          <div class="eyebrow" style="margin-bottom: 8px;">Free</div>
+          <h3>Starter</h3>
+          <div class="price-tag">$0</div>
+          <div class="price-sub">For trying the core mindful-eating flow</div>
+          <div class="list">
+            <div class="list-item"><div class="check">✓</div><div>Daily body signal check-in</div></div>
+            <div class="list-item"><div class="check">✓</div><div>Basic meal intention flow</div></div>
+            <div class="list-item"><div class="check">✓</div><div>Simple daily reflections</div></div>
+          </div>
+          <a href="#start" class="btn btn-secondary" style="width: 100%;">Get started</a>
+        </div>
+
+        <div class="price-card featured">
+          <div class="eyebrow" style="margin-bottom: 8px;">Most Popular</div>
+          <h3>SSME Plus</h3>
+          <div class="price-tag">$9<span style="font-size: 1rem; font-weight: 700;">/mo</span></div>
+          <div class="price-sub">For deeper meal guidance and pattern awareness</div>
+          <div class="list">
+            <div class="list-item"><div class="check">✓</div><div>Everything in Starter</div></div>
+            <div class="list-item"><div class="check">✓</div><div>Meal photo guidance</div></div>
+            <div class="list-item"><div class="check">✓</div><div>Time-series pattern view</div></div>
+            <div class="list-item"><div class="check">✓</div><div>Gentle personalized suggestions</div></div>
+          </div>
+          <a href="#start" class="btn btn-primary" style="width: 100%;">Start free trial</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section" id="faq">
+    <div class="container">
+      <div class="section-head">
+        <h2>FAQ</h2>
+        <p>Helpful starter answers for a public-facing SSME landing page.</p>
+      </div>
+      <div class="faq">
+        <details open>
+          <summary>What is SSME?</summary>
+          <p>SSME stands for Secret Superpower of Mindful Eating. It is a digital experience designed to help people notice body signals, make calmer food choices, and support more consistent energy throughout the day.</p>
+        </details>
+        <details>
+          <summary>Is this focused on dieting or calorie counting?</summary>
+          <p>No. The tone is meant to be gentle and non-judgmental. The core idea is signals over scores — supporting reflection and better choices rather than rigid tracking.</p>
+        </details>
+        <details>
+          <summary>Who is SSME for?</summary>
+          <p>It is ideal for people who feel energy dips, decision fatigue around food, or want a more mindful and realistic approach to meal planning.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section" id="start">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Start building steadier energy, one meal at a time</h2>
+        <p>
+          Launch a calm, beautiful first impression for SSME with this static site. Replace the button links, pricing, and copy with your latest product details when ready.
+        </p>
+        <div class="hero-actions" style="justify-content: center; margin-bottom: 0;">
+          <a class="btn btn-primary" href="mailto:hello@ssme.app">Contact SSME</a>
+          <a class="btn btn-secondary" href="#top">Back to top</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <strong>SSME</strong><br />
+        Secret Superpower of Mindful Eating
+      </div>
+      <div>© 2026 SSME. All rights reserved.</div>
+    </div>
+  </footer>
+</body>
+</html>
